@@ -1,8 +1,107 @@
-# Polygon CDK Validium Node
+# ZITE-COIN 블록체인
 
-For a full overview of the CDK-Validium please reference the [CDK documentation](https://wiki.polygon.technology/docs/cdk/).
+ZITE-COIN은 이더리움을 포크하여 만든 POA(Proof of Authority) 기반의 블록체인입니다.
 
-The CDK-Validium solution is made up of several components, start with the [CDK Validium Node](https://github.com/0xPolygon/cdk-validium-node). However, for quick reference, the complete list of components are outlined below:
+## 🚀 주요 특징
+
+- **총 발행량**: 80억 ZITE
+- **블록 생성 주기**: 3초
+- **합의 방식**: POA (Proof of Authority)
+- **관리자 계정**: 2개
+- **사용자 계정**: 3개
+
+## 📋 계정 정보
+
+### 관리자 계정 (Admin)
+- **Admin 1**: `0x742d35Cc6734C0532925a3b8D100fD4C27F0C50B` (2,000,000,000 ZITE)
+- **Admin 2**: `0x8ba1f109551bD432803012645Hac136c95ce293e` (2,000,000,000 ZITE)
+
+### 사용자 계정 (User)
+- **User 1**: `0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f` (1,000,000,000 ZITE)
+- **User 2**: `0xa0Ee7A142d267C1f36714E4a8F75612F20a79720` (1,000,000,000 ZITE)
+- **User 3**: `0xBcd4042DE499D14e55001CcbB24a551F3b954096` (1,000,000,000 ZITE)
+
+
+### 배포자 계정
+- **Deployer**: `0x2cc6F290ff0c54A9AE15d2508a771cEE097b6533` (SepoliaETH 보유)
+
+### ZITE 토큰 컨트랙트 (Sepolia)
+- **컨트랙트 주소**: [`0x92fA286eAb4Bdc5bC95B489de94aF0a07C618536`](https://sepolia.etherscan.io/address/0x92fA286eAb4Bdc5bC95B489de94aF0a07C618536)
+- **Etherscan에서 확인**: https://sepolia.etherscan.io/address/0x92fA286eAb4Bdc5bC95B489de94aF0a07C618536
+
+## 🛠️ 실행 방법
+
+### 1. ZITE-COIN 노드 시작
+```powershell
+# PowerShell에서 실행
+.\scripts\start-zite-coin.ps1
+```
+
+### 2. 계정 정보 확인
+```powershell
+# PowerShell에서 실행
+.\scripts\show-accounts.ps1
+```
+
+### 3. 코인 전송 테스트
+```powershell
+# 기본 전송 (Admin 1 → User 1, 1000 ZITE)
+.\scripts\test-transfer.ps1
+
+# 사용자 정의 전송
+.\scripts\test-transfer.ps1 -Amount "5000" -From "0x742d35Cc6734C0532925a3b8D100fD4C27F0C50B" -To "0xa0Ee7A142d267C1f36714E4a8F75612F20a79720"
+```
+
+## 🌐 RPC 접속 정보
+
+- **HTTP RPC**: `http://localhost:8545`
+- **WebSocket**: `ws://localhost:8546`
+
+## 📁 프로젝트 구조
+
+```
+zite-coin/
+├── dist/                      # 빌드된 바이너리
+│   └── zite-coin.exe
+├── config/                    # 설정 파일
+│   ├── zite-genesis.config.json  # 제네시스 설정
+│   └── zite-node.toml            # 노드 설정
+├── scripts/                   # 실행 스크립트
+│   ├── start-zite-coin.ps1       # 노드 시작
+│   ├── show-accounts.ps1         # 계정 정보 조회
+│   └── test-transfer.ps1         # 전송 테스트
+├── logs/                      # 로그 파일
+└── README.md                  # 이 파일
+```
+
+## 🔧 개발 정보
+
+- **기반 프레임워크**: Polygon CDK (zkEVM)
+- **언어**: Go
+- **빌드 도구**: Make
+- **컨테이너**: Docker (선택사항)
+
+## 📝 주의사항
+
+1. 이 블록체인은 테스트/개발 목적으로 만들어졌습니다.
+2. 실제 운영 환경에서 사용하기 전에 보안 검토가 필요합니다.
+3. 프라이빗 키는 안전하게 관리해야 합니다.
+
+## 🆘 문제 해결
+
+### 노드가 시작되지 않는 경우
+1. 포트 8545, 8546이 사용 중인지 확인
+2. 설정 파일 경로가 올바른지 확인
+3. 로그 파일을 확인하여 오류 메시지 확인
+
+### RPC 연결이 안 되는 경우
+1. 노드가 정상적으로 실행 중인지 확인
+2. 방화벽 설정 확인
+3. `http://localhost:8545` 접속 테스트
+
+---
+
+**ZITE-COIN** - 빠르고 안전한 POA 블록체인
 
 | Component                                                                     | Description                                                          |
 | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
@@ -18,10 +117,6 @@ Understanding the underlying protocol is crucial when working with an implementa
 For an in-depth understanding of the protocol’s specifications, please refer to the [zkEVM Protocol Overview](https://wiki.polygon.technology/docs/zkevm/)
 
 ## Run a CDK Validium
-
-> This repo is a fork of the [zkevm-node](https://github.com/0xPolygonHermez/zkevm-node), more information and code diff explained [here](./docs/diff/diff.md)
-
-### Development
 
 > ARM devices (such as Apple M1 and M2) are not supported
 
@@ -63,9 +158,6 @@ cd test
 
 ```
 make run
-```
-
-#### Usage
 
 - L2 RPC endpoint: `http://localhost:8123`
 - L2 Chain ID: 1001

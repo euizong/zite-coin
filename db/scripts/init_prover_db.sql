@@ -1,5 +1,5 @@
 CREATE DATABASE prover_db;
-\connect prover_db;
+connect prover_db;
 
 CREATE SCHEMA state;
 

@@ -1,0 +1,38 @@
+{
+  "name": "zite-token",
+  "version": "1.0.0",
+  "description": "ZITE Token for Gaming",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:mumbai": "hardhat run scripts/deploy.js --network mumbai",
+    "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
+    "verify": "hardhat verify --network mumbai",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "dev": "nodemon --watch src --ext ts,js,json --exec \"npm run build && node dist/server/index.js\""
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/minimatch": "^6.0.0",
+    "@types/node": "^24.1.0",
+    "hardhat": "^2.19.0",
+    "minimatch": "^10.0.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "@types/knex": "^0.16.1",
+    "@types/pg": "^8.15.5",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.8.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3"
+  }
+}

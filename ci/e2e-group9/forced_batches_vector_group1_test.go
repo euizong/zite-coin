@@ -1,1 +1,0 @@
-../../test/e2e/forced_batches_vector_group1_test.go
