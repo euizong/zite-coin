@@ -4,7 +4,7 @@ ZITE-COIN은 이더리움을 포크하여 만든 POA(Proof of Authority) 기반�
 
 ## 🚀 주요 특징
 
-- **총 발행량**: 80억 ZITE
+- **총 발행량**: 10억 ZITE
 - **블록 생성 주기**: 3초
 - **합의 방식**: POA (Proof of Authority)
 - **관리자 계정**: 2개
