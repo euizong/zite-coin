@@ -36,10 +36,16 @@ module.exports = {
       }
     },
     polygon: {
-      url: process.env.RPC_URL_MAINNET || "https://polygon-rpc.com",
+      url: process.env.RPC_URL_MAINNET || `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
       accounts: process.env.PRIVATE_KEY_MAINNET ? [process.env.PRIVATE_KEY_MAINNET] : [],
       chainId: 137,
-      gasPrice: 35000000000,
+      gas: "auto",
+      gasPrice: "auto",
+      gasMultiplier: 1.05, // 자동 가스비에 5% 여유분 (일반적인 설정)
+      timeout: 120000, // 60초 타임아웃
+      httpHeaders: {
+        "User-Agent": "hardhat"
+      }
     },
     sepolia: {
       url: process.env.RPC_URL_TESTNET || "https://sepolia.infura.io/v3/1bcb95c318484ffd86a797e9d81835fb",

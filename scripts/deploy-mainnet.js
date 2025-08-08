@@ -26,6 +26,7 @@ async function main() {
   const ZITEToken = await ethers.getContractFactory("ZITEToken");
   const ziteToken = await ZITEToken.deploy(deployer.address);
   
+  console.log("⏳ 트랜잭션 대기 중...");
   await ziteToken.waitForDeployment();
   const tokenAddress = await ziteToken.getAddress();
   
@@ -33,17 +34,27 @@ async function main() {
   console.log(`📍 컨트랙트 주소: ${tokenAddress}`);
   console.log(`👤 소유자: ${deployer.address}`);
   
-  // 토큰 정보 확인
-  const name = await ziteToken.name();
-  const symbol = await ziteToken.symbol();
-  const decimals = await ziteToken.decimals();
-  const totalSupply = await ziteToken.totalSupply();
+  // 블록 확정 대기 (3블록)
+  console.log("⏳ 블록 확정 대기 중... (30초)");
+  await new Promise(resolve => setTimeout(resolve, 30000));
   
-  console.log(`\n📊 토큰 정보:`);
-  console.log(`   이름: ${name}`);
-  console.log(`   심볼: ${symbol}`);
-  console.log(`   소수점: ${decimals}`);
-  console.log(`   총 공급량: ${ethers.formatUnits(totalSupply, decimals)} ZITE`);
+  try {
+    // 토큰 정보 확인 (안전한 방식)
+    console.log("\n📊 토큰 정보 확인 중...");
+    const name = await ziteToken.name();
+    const symbol = await ziteToken.symbol();
+    const decimals = await ziteToken.decimals();
+    const totalSupply = await ziteToken.totalSupply();
+    
+    console.log(`✅ 토큰 정보:`);
+    console.log(`   이름: ${name}`);
+    console.log(`   심볼: ${symbol}`);
+    console.log(`   소수점: ${decimals}`);
+    console.log(`   총 공급량: ${ethers.formatUnits(totalSupply, decimals)} ZITE`);
+  } catch (error) {
+    console.log("⚠️  토큰 정보 확인 실패 (배포는 성공)");
+    console.log("💡 잠시 후 Polygonscan에서 확인 가능합니다.");
+  }
   
   console.log(`\n🔧 .env 파일에 다음 주소를 추가하세요:`);
   console.log(`TOKEN_CONTRACT_ADDRESS_MAINNET=${tokenAddress}`);

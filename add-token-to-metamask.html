@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZITE 토큰을 MetaMask에 추가</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .token-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            background: #f6851b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #e2761b;
+        }
+        .address {
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🪙 ZITE 토큰을 MetaMask에 추가</h1>
+    
+    <div class="token-info">
+        <h3>📊 토큰 정보</h3>
+        <p><strong>이름:</strong> ZITE Token</p>
+        <p><strong>심볼:</strong> ZITE</p>
+        <p><strong>소수점:</strong> 18</p>
+        <p><strong>네트워크:</strong> Polygon 메인넷</p>
+        <div class="address">
+            <strong>컨트랙트 주소:</strong><br>
+            0x319080F850811DCd0caf0E0184cc2CA39Aa37A42
+        </div>
+    </div>
+
+    <button onclick="addTokenToMetaMask()">
+        🦊 MetaMask에 ZITE 토큰 추가
+    </button>
+
+    <button onclick="copyAddress()">
+        📋 주소 복사
+    </button>
+
+    <p>
+        <a href="https://polygonscan.com/address/0x319080F850811DCd0caf0E0184cc2CA39Aa37A42" target="_blank">
+            🔍 Polygonscan에서 확인
+        </a>
+    </p>
+
+    <script>
+        const tokenAddress = '0x319080F850811DCd0caf0E0184cc2CA39Aa37A42';
+        const tokenSymbol = 'ZITE';
+        const tokenDecimals = 18;
+
+        async function addTokenToMetaMask() {
+            try {
+                // MetaMask가 설치되어 있는지 확인
+                if (typeof window.ethereum === 'undefined') {
+                    alert('MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.');
+                    window.open('https://metamask.io/', '_blank');
+                    return;
+                }
+
+                // Polygon 네트워크로 변경 요청
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x89' }], // Polygon 메인넷 (137)
+                });
+
+                // 토큰 추가 요청
+                const wasAdded = await window.ethereum.request({
+                    method: 'wallet_watchAsset',
+                    params: {
+                        type: 'ERC20',
+                        options: {
+                            address: tokenAddress,
+                            symbol: tokenSymbol,
+                            decimals: tokenDecimals,
+                        },
+                    },
+                });
+
+                if (wasAdded) {
+                    alert('✅ ZITE 토큰이 MetaMask에 성공적으로 추가되었습니다!');
+                } else {
+                    alert('❌ 토큰 추가가 취소되었습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        function copyAddress() {
+            navigator.clipboard.writeText(tokenAddress).then(() => {
+                alert('📋 주소가 클립보드에 복사되었습니다!');
+            });
+        }
+    </script>
+</body>
+</html>
